@@ -1,0 +1,12 @@
+{
+  "name": "coinCatalog",
+  "displayName": "coinCatalog",
+  "expo": {
+    "name": "coinCatalog",
+    "slug": "coinCatalog",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
