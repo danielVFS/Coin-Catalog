@@ -1,21 +1,6 @@
 import { Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
 
-import {
-  Roboto_100Thin,
-  Roboto_100Thin_Italic,
-  Roboto_300Light,
-  Roboto_300Light_Italic,
-  Roboto_400Regular,
-  Roboto_400Regular_Italic,
-  Roboto_500Medium,
-  Roboto_500Medium_Italic,
-  Roboto_700Bold,
-  Roboto_700Bold_Italic,
-  Roboto_900Black,
-  Roboto_900Black_Italic,
-} from "@expo-google-fonts/roboto";
-
 export const COLORS = {
   // base colors
   primary: "#131313",
@@ -63,31 +48,26 @@ export const SIZES = {
 
 export const FONTS = {
   largeTitle: {
-    fontFamily: "Roboto_400Regular",
     fontSize: SIZES.largeTitle,
     lineHeight: 55,
   },
-  h1: { fontFamily: "Roboto_900Black", fontSize: SIZES.h1, lineHeight: 36 },
-  h2: { fontFamily: "Roboto_700Bold", fontSize: SIZES.h2, lineHeight: 30 },
-  h3: { fontFamily: "Roboto_700Bold", fontSize: SIZES.h3, lineHeight: 22 },
-  h4: { fontFamily: "Roboto_700Bold", fontSize: SIZES.h4, lineHeight: 22 },
+  h1: { fontSize: SIZES.h1, lineHeight: 36 },
+  h2: { fontSize: SIZES.h2, lineHeight: 30 },
+  h3: { fontSize: SIZES.h3, lineHeight: 22 },
+  h4: { fontSize: SIZES.h4, lineHeight: 22 },
   body1: {
-    fontFamily: "Roboto_400Regular",
     fontSize: SIZES.body1,
     lineHeight: 36,
   },
   body2: {
-    fontFamily: "Roboto_400Regular",
     fontSize: SIZES.body2,
     lineHeight: 30,
   },
   body3: {
-    fontFamily: "Roboto_400Regular",
     fontSize: SIZES.body3,
     lineHeight: 22,
   },
   body4: {
-    fontFamily: "Roboto_400Regular",
     fontSize: SIZES.body4,
     lineHeight: 22,
   },
