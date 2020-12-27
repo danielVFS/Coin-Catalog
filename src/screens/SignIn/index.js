@@ -65,7 +65,7 @@ export default function SignIn({ navigation }) {
           resizeMode="stretch"
         />
       </SafeAreaView>
-      <View style={styles.footer}>
+      <Animatable.View animation="fadeInUpBig" style={styles.footer}>
         <View style={styles.titleArea}>
           <Text style={styles.titleText}>Login</Text>
         </View>
@@ -129,7 +129,7 @@ export default function SignIn({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </Animatable.View>
     </View>
   );
 }
