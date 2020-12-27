@@ -11,7 +11,6 @@ import {
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
-import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 
@@ -19,26 +18,44 @@ import { COLORS, FONTS, SIZES } from "../../themes/theme";
 
 export default function SignIn({ navigation }) {
   const [data, setData] = React.useState({
+    name: "",
     email: "",
     password: "",
     confirm_password: "",
-    check_textInputChange: false,
+    check_textInputNameChange: false,
+    check_textInputEmailChange: false,
     secureTextEntry: true,
     confirm_secureTextEntry: true,
   });
 
-  const textInputChange = (value) => {
+  const textInputEmailChange = (value) => {
     if (value.lenght !== 0) {
       setData({
         ...data,
         email: value,
-        check_textInputChange: true,
+        check_textInputEmailChange: true,
       });
     } else {
       setData({
         ...data,
         email: value,
-        check_textInputChange: false,
+        check_textInputEmailChange: false,
+      });
+    }
+  };
+
+  const textInputNameChange = (value) => {
+    if (value.lenght !== 0) {
+      setData({
+        ...data,
+        name: value,
+        check_textInputNameChange: true,
+      });
+    } else {
+      setData({
+        ...data,
+        email: value,
+        check_textInputNameChange: false,
       });
     }
   };
@@ -73,32 +90,40 @@ export default function SignIn({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView style={styles.header}>
-        <Image
-          source={require("../../assets/images/IconLogo.png")}
-          style={styles.Logo}
-          resizeMode="stretch"
-        />
-      </SafeAreaView>
+      <SafeAreaView style={styles.header}></SafeAreaView>
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
         <View style={styles.titleArea}>
           <Text style={styles.titleText}>Registre-se</Text>
         </View>
-        <View style={styles.action}>
-          <FontAwesome name="user" color={COLORS.primary} size={25} />
+        <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
+          <FontAwesome name="male" color={COLORS.primary} size={25} />
           <TextInput
-            placeholder="E-mail"
+            placeholder="Nome Completo"
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={(value) => textInputChange(value)}
+            onChangeText={(value) => textInputNameChange(value)}
           />
-          {data.check_textInputChange ? (
+          {data.check_textInputNameChange ? (
             <Animatable.View animation="bounceIn">
               <Feather name="check-circle" color="green" size={25} />
             </Animatable.View>
           ) : null}
         </View>
-        <View style={[styles.action, { marginTop: 30 }]}>
+        <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
+          <FontAwesome name="user" color={COLORS.primary} size={25} />
+          <TextInput
+            placeholder="E-mail"
+            style={styles.textInput}
+            autoCapitalize="none"
+            onChangeText={(value) => textInputEmailChange(value)}
+          />
+          {data.check_textInputEmailChange ? (
+            <Animatable.View animation="bounceIn">
+              <Feather name="check-circle" color="green" size={25} />
+            </Animatable.View>
+          ) : null}
+        </View>
+        <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
           <FontAwesome name="lock" color={COLORS.primary} size={25} />
           <TextInput
             placeholder="Senha"
@@ -114,7 +139,7 @@ export default function SignIn({ navigation }) {
             )}
           </TouchableOpacity>
         </View>
-        <View style={[styles.action, { marginTop: 30 }]}>
+        <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
           <FontAwesome name="lock" color={COLORS.primary} size={25} />
           <TextInput
             placeholder="Confirmar Senha"
@@ -132,14 +157,14 @@ export default function SignIn({ navigation }) {
         </View>
 
         <View style={styles.footerSection}>
-          <LinearGradient
-            colors={["#FC955F", "#FC955F"]}
+          <TouchableOpacity
             style={styles.signInButton}
+            onPress={() => alert("Funcionando também")}
           >
             <Text style={[styles.signInButtonText, { color: COLORS.white }]}>
               Registrar-se
             </Text>
-          </LinearGradient>
+          </TouchableOpacity>
 
           <View style={styles.accountRegister}>
             <Text style={{ fontSize: SIZES.body4, color: COLORS.darkgray }}>
@@ -159,7 +184,6 @@ export default function SignIn({ navigation }) {
 }
 
 const { height } = Dimensions.get("screen");
-const height_logo = height * 0.2;
 
 const styles = StyleSheet.create({
   container: {
@@ -167,11 +191,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   header: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingBottom: 60,
+    width: "100%",
+    height: 100,
   },
   footer: {
     flex: 3,
@@ -180,11 +201,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-  },
-  Logo: {
-    width: height_logo,
-    height: height_logo,
-    marginTop: 70,
   },
   text_footer: {
     color: COLORS.primary,
@@ -220,6 +236,7 @@ const styles = StyleSheet.create({
   signInButton: {
     width: "100%",
     height: 50,
+    backgroundColor: COLORS.tertiary,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: SIZES.radius,

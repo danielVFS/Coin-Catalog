@@ -58,17 +58,19 @@ export default function SignIn({ navigation }) {
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.header}>
-        <Image
+        <Animatable.Image
           source={require("../../assets/images/IconLogo.png")}
           style={styles.Logo}
           resizeMode="stretch"
+          animation="pulse"
+          iterationCount={10}
         />
       </SafeAreaView>
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
         <View style={styles.titleArea}>
           <Text style={styles.titleText}>Login</Text>
         </View>
-        <View style={styles.action}>
+        <View style={[styles.action, { marginTop: 25 }]}>
           <FontAwesome name="user" color={COLORS.primary} size={25} />
           <TextInput
             placeholder="E-mail"
@@ -82,7 +84,7 @@ export default function SignIn({ navigation }) {
             </Animatable.View>
           ) : null}
         </View>
-        <View style={[styles.action, { marginTop: 30 }]}>
+        <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
           <FontAwesome name="lock" color={COLORS.primary} size={25} />
           <TextInput
             placeholder="Senha"
@@ -100,14 +102,14 @@ export default function SignIn({ navigation }) {
         </View>
 
         <View style={styles.footerSection}>
-          <LinearGradient
-            colors={["#FC955F", "#FC955F"]}
+          <TouchableOpacity
+            onPress={() => alert("Funcionando")}
             style={styles.signInButton}
           >
             <Text style={[styles.signInButtonText, { color: COLORS.white }]}>
               Entrar
             </Text>
-          </LinearGradient>
+          </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => alert("A implementar")}
@@ -195,6 +197,7 @@ const styles = StyleSheet.create({
   signInButton: {
     width: "100%",
     height: 50,
+    backgroundColor: COLORS.tertiary,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: SIZES.radius,
