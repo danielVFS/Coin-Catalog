@@ -7,7 +7,7 @@ import SplashScreen from "../screens/Splash";
 
 function Routes() {
   const signed = false;
-  const loading = true;
+  const loading = false;
 
   if (loading) {
     return <SplashScreen />;
