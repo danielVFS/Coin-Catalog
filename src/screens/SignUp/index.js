@@ -16,7 +16,11 @@ import Feather from "react-native-vector-icons/Feather";
 
 import { COLORS, FONTS, SIZES } from "../../themes/theme";
 
+import { AuthContext } from "../../hooks/authContext";
+
 export default function SignIn({ navigation }) {
+  const { signUp } = React.useContext(AuthContext);
+
   const [data, setData] = React.useState({
     name: "",
     email: "",
@@ -159,7 +163,7 @@ export default function SignIn({ navigation }) {
         <View style={styles.footerSection}>
           <TouchableOpacity
             style={styles.signInButton}
-            onPress={() => alert("Funcionando também")}
+            onPress={() => signUp()}
           >
             <Text style={[styles.signInButtonText, { color: COLORS.white }]}>
               Registrar-se

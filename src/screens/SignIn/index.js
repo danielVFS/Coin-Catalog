@@ -11,13 +11,16 @@ import {
 } from "react-native";
 
 import * as Animatable from "react-native-animatable";
-import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 
 import { COLORS, FONTS, SIZES } from "../../themes/theme";
 
+import { AuthContext } from "../../hooks/authContext";
+
 export default function SignIn({ navigation }) {
+  const { signIn } = React.useContext(AuthContext);
+
   const [data, setData] = React.useState({
     email: "",
     password: "",
@@ -103,7 +106,7 @@ export default function SignIn({ navigation }) {
 
         <View style={styles.footerSection}>
           <TouchableOpacity
-            onPress={() => alert(`${data.email} + ${data.password}`)}
+            onPress={() => signIn()}
             style={styles.signInButton}
           >
             <Text style={[styles.signInButtonText, { color: COLORS.white }]}>
