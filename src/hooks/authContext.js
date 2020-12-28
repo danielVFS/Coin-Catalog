@@ -49,17 +49,28 @@ function AuthProvider({ children }) {
 
   const authContext = React.useMemo(
     () => ({
-      signIn: (email, password) => {
-        console.log(email, password);
+      signIn: async (email, password) => {
         let userToken;
+        userToken = null;
         // ainda com informações estáticas
         if (email === "user" && password == "123") {
-          userToken = "token";
+          try {
+            userToken = "token";
+            await AsyncStorage.setItem("@user_Token", userToken);
+          } catch (e) {
+            console.log(e);
+          }
         }
 
         dispatch({ type: "LOGIN", email: email, token: userToken });
       },
-      signOut: () => {
+      signOut: async () => {
+        try {
+          await AsyncStorage.removeItem("@user_Token");
+        } catch (e) {
+          console.log(e);
+        }
+
         dispatch({ type: "LOGOUT" });
       },
       signUp: () => {
@@ -71,8 +82,15 @@ function AuthProvider({ children }) {
   );
 
   React.useEffect(() => {
-    setTimeout(() => {
-      dispatch({ type: "RETRIEVE_TOKEN", token: "token" });
+    setTimeout(async () => {
+      let userToken = null;
+      try {
+        userToken = await AsyncStorage.getItem("@user_Token");
+      } catch (e) {
+        console.log(e);
+      }
+
+      dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
     }, 1000);
   }, []);
 
