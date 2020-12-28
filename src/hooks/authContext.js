@@ -1,11 +1,9 @@
 import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const AuthContext = React.createContext();
 
 function AuthProvider({ children }) {
-  //const [isLoading, setIsLoading] = React.useState(true);
-  //const [userToken, setUserToken] = React.useState(null);
-
   const initialLoginState = {
     isLoading: true,
     userEmail: null,
@@ -52,16 +50,18 @@ function AuthProvider({ children }) {
   const authContext = React.useMemo(
     () => ({
       signIn: (email, password) => {
+        console.log(email, password);
         let userToken;
-        userName = null;
         // ainda com informações estáticas
-        if (email === "user" && password === "123") {
+        if (email === "user" && password == "123") {
           userToken = "token";
         }
 
         dispatch({ type: "LOGIN", email: email, token: userToken });
       },
-      signOut: () => {},
+      signOut: () => {
+        dispatch({ type: "LOGOUT" });
+      },
       signUp: () => {
         setUserToken("token");
         setIsLoading(false);

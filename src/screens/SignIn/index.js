@@ -58,6 +58,10 @@ export default function SignIn({ navigation }) {
     });
   };
 
+  const loginHandle = (email, password) => {
+    signIn(email, password);
+  };
+
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.header}>
@@ -106,7 +110,9 @@ export default function SignIn({ navigation }) {
 
         <View style={styles.footerSection}>
           <TouchableOpacity
-            onPress={() => signIn()}
+            onPress={() => {
+              loginHandle(data.email, data.password);
+            }}
             style={styles.signInButton}
           >
             <Text style={[styles.signInButtonText, { color: COLORS.white }]}>
