@@ -5,15 +5,16 @@ import AppRoutes from "./app.routes";
 
 import SplashScreen from "../screens/Splash";
 
-function Routes() {
-  const signed = false;
-  const loading = false;
+import { AuthContext } from "../hooks/authContext";
 
-  if (loading) {
+function Routes() {
+  const { isLoading } = React.useContext(AuthContext);
+
+  if (isLoading) {
     return <SplashScreen />;
   }
 
-  return signed ? <AppRoutes /> : <AuthRoutes />;
+  return <AuthRoutes />;
 }
 
 export default Routes;

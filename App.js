@@ -6,11 +6,15 @@ import { COLORS } from "./src/themes/theme";
 
 import Routes from "./src/routes/";
 
+import AuthProvider from "./src/hooks/authContext";
+
 export default function App() {
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor={COLORS.primary} style="light" />
-      <Routes />
+      <AuthProvider>
+        <StatusBar backgroundColor={COLORS.primary} style="light" />
+        <Routes />
+      </AuthProvider>
     </NavigationContainer>
   );
 }

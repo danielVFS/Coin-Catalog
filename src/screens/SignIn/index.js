@@ -103,7 +103,7 @@ export default function SignIn({ navigation }) {
 
         <View style={styles.footerSection}>
           <TouchableOpacity
-            onPress={() => alert("Funcionando")}
+            onPress={() => alert(`${data.email} + ${data.password}`)}
             style={styles.signInButton}
           >
             <Text style={[styles.signInButtonText, { color: COLORS.white }]}>
