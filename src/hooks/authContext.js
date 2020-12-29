@@ -49,17 +49,15 @@ function AuthProvider({ children }) {
 
   const authContext = React.useMemo(
     () => ({
-      signIn: async (email, password) => {
-        let userToken;
-        userToken = null;
-        // ainda com informações estáticas
-        if (email === "user" && password == "123") {
-          try {
-            userToken = "token";
-            await AsyncStorage.setItem("@user_Token", userToken);
-          } catch (e) {
-            console.log(e);
-          }
+      signIn: async (foundUser) => {
+        const userToken = String(foundUser[0].userToken);
+        const email = foundUser[0].email;
+
+        try {
+          userToken = "token";
+          await AsyncStorage.setItem("@user_Token", userToken);
+        } catch (e) {
+          console.log(e);
         }
 
         dispatch({ type: "LOGIN", email: email, token: userToken });

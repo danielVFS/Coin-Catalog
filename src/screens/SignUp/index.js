@@ -118,6 +118,7 @@ export default function SignIn({ navigation }) {
           <TextInput
             placeholder="E-mail"
             autoCompleteType="email"
+            keyboardType="email-address"
             style={styles.textInput}
             autoCapitalize="none"
             onChangeText={(value) => textInputEmailChange(value)}

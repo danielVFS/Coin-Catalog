@@ -4,7 +4,7 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  Image,
+  Alert,
   TextInput,
   TouchableOpacity,
   Dimensions,
@@ -17,6 +17,8 @@ import Feather from "react-native-vector-icons/Feather";
 import { COLORS, FONTS, SIZES } from "../../themes/theme";
 
 import { AuthContext } from "../../hooks/authContext";
+
+import Users from "../../models/Users";
 
 export default function SignIn({ navigation }) {
   const { signIn } = React.useContext(AuthContext);
@@ -74,7 +76,25 @@ export default function SignIn({ navigation }) {
   };
 
   const loginHandle = (email, password) => {
-    signIn(email, password);
+    const foundUser = Users.filter((item) => {
+      return email === item.email && password === item.password;
+    });
+
+    if (data.email.length === 0 || data.password.length === 0) {
+      Alert.alert("Campo Vazio!", "Email ou Senha não podem estar vazios.", [
+        { text: "OK" },
+      ]);
+      return;
+    }
+
+    if (foundUser.length === 0) {
+      Alert.alert("Usuário inválido!", "Email ou Senha incorretos.", [
+        { text: "OK" },
+      ]);
+      return;
+    }
+
+    signIn(foundUser);
   };
 
   const handleValidUser = (value) => {
@@ -111,6 +131,7 @@ export default function SignIn({ navigation }) {
           <TextInput
             placeholder="E-mail"
             autoCompleteType="email"
+            keyboardType="email-address"
             style={styles.textInput}
             autoCapitalize="none"
             onChangeText={(value) => textInputChange(value)}
