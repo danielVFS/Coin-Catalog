@@ -26,29 +26,44 @@ export default function SignIn({ navigation }) {
     password: "",
     check_textInputChange: false,
     secureTextEntry: true,
+    isValidEmail: true,
+    isValidPassword: true,
   });
 
-  const textInputChange = (value) => {
-    if (value.lenght !== 0) {
+  const textInputChange = (email) => {
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (regex.test(String(email).toLocaleLowerCase())) {
       setData({
         ...data,
-        email: value,
+        email: email,
         check_textInputChange: true,
+        isValidEmail: true,
       });
     } else {
       setData({
         ...data,
-        email: value,
+        email: email,
         check_textInputChange: false,
+        isValidEmail: false,
       });
     }
   };
 
   const handlePasswordChange = (value) => {
-    setData({
-      ...data,
-      password: value,
-    });
+    if (value.trim().length >= 8) {
+      setData({
+        ...data,
+        password: value,
+        isValidPassword: true,
+      });
+    } else {
+      setData({
+        ...data,
+        password: value,
+        isValidPassword: false,
+      });
+    }
   };
 
   const updateSecureTextEntry = () => {
@@ -60,6 +75,20 @@ export default function SignIn({ navigation }) {
 
   const loginHandle = (email, password) => {
     signIn(email, password);
+  };
+
+  const handleValidUser = (value) => {
+    if (value.trim().length >= 4) {
+      setData({
+        ...data,
+        isValidEmail: true,
+      });
+    } else {
+      setData({
+        ...data,
+        isValidEmail: false,
+      });
+    }
   };
 
   return (
@@ -81,9 +110,11 @@ export default function SignIn({ navigation }) {
           <FontAwesome name="user" color={COLORS.primary} size={25} />
           <TextInput
             placeholder="E-mail"
+            autoCompleteType="email"
             style={styles.textInput}
             autoCapitalize="none"
             onChangeText={(value) => textInputChange(value)}
+            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
           />
           {data.check_textInputChange ? (
             <Animatable.View animation="bounceIn">
@@ -91,6 +122,14 @@ export default function SignIn({ navigation }) {
             </Animatable.View>
           ) : null}
         </View>
+        {data.isValidEmail ? null : (
+          <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>
+              Email deve ser um e-mail válido.
+            </Text>
+          </Animatable.View>
+        )}
+
         <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
           <FontAwesome name="lock" color={COLORS.primary} size={25} />
           <TextInput
@@ -107,6 +146,13 @@ export default function SignIn({ navigation }) {
             )}
           </TouchableOpacity>
         </View>
+        {data.isValidPassword ? null : (
+          <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>
+              Senha deve ter no mínimo 8 caracteres caracteres.
+            </Text>
+          </Animatable.View>
+        )}
 
         <View style={styles.footerSection}>
           <TouchableOpacity
@@ -232,5 +278,9 @@ const styles = StyleSheet.create({
   signUpButtonText: {
     fontWeight: "bold",
     color: "#FC955F",
+  },
+  errorMsg: {
+    color: COLORS.red,
+    fontSize: SIZES.body4,
   },
 });

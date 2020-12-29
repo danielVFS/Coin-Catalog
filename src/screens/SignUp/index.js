@@ -117,6 +117,7 @@ export default function SignIn({ navigation }) {
           <FontAwesome name="user" color={COLORS.primary} size={25} />
           <TextInput
             placeholder="E-mail"
+            autoCompleteType="email"
             style={styles.textInput}
             autoCapitalize="none"
             onChangeText={(value) => textInputEmailChange(value)}
