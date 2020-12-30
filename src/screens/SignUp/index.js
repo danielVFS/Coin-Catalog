@@ -95,131 +95,136 @@ export default function SignIn({ navigation }) {
     });
   };
 
-  const _onChange = (form) => console.log(form);
+  const _onChange = (formData) => console.log(formData);
 
   const _onFocus = (field) => console.log("focusing", field);
 
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.header}></SafeAreaView>
-      <ScrollView style={styles.footer} showsVerticalScrollIndicator={false}>
-        <View style={styles.titleArea}>
-          <Text style={styles.titleText}>Registre-se</Text>
-          <View style={styles.accountRegister}>
-            <Text style={{ fontSize: SIZES.body4, color: COLORS.darkgray }}>
-              Já tem uma conta ?
-            </Text>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={styles.signUpButton}
-            >
-              <Text style={styles.signUpButtonText}>Voltar</Text>
+      <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+        <ScrollView
+          style={styles.scroolView}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.titleArea}>
+            <Text style={styles.titleText}>Registre-se</Text>
+            <View style={styles.accountRegister}>
+              <Text style={{ fontSize: SIZES.body4, color: COLORS.darkgray }}>
+                Já tem uma conta ?
+              </Text>
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={styles.signUpButton}
+              >
+                <Text style={styles.signUpButtonText}>Voltar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={[styles.action]}>
+            <FontAwesome name="male" color={COLORS.primary} size={25} />
+            <TextInput
+              placeholder="Nome Completo"
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={(value) => textInputNameChange(value)}
+            />
+            {data.check_textInputNameChange ? (
+              <Animatable.View animation="bounceIn">
+                <Feather name="check-circle" color="green" size={25} />
+              </Animatable.View>
+            ) : null}
+          </View>
+          <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
+            <FontAwesome name="user" color={COLORS.primary} size={25} />
+            <TextInput
+              placeholder="E-mail"
+              autoCompleteType="email"
+              keyboardType="email-address"
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={(value) => textInputEmailChange(value)}
+            />
+            {data.check_textInputEmailChange ? (
+              <Animatable.View animation="bounceIn">
+                <Feather name="check-circle" color="green" size={25} />
+              </Animatable.View>
+            ) : null}
+          </View>
+          <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
+            <FontAwesome name="lock" color={COLORS.primary} size={25} />
+            <TextInput
+              placeholder="Senha"
+              style={styles.textInput}
+              secureTextEntry={data.secureTextEntry ? true : false}
+              onChangeText={(value) => handlePasswordChange(value)}
+            />
+            <TouchableOpacity onPress={updateSecureTextEntry}>
+              {data.secureTextEntry ? (
+                <Feather name="eye-off" color={COLORS.gray} size={25} />
+              ) : (
+                <Feather name="eye" color={COLORS.gray} size={25} />
+              )}
             </TouchableOpacity>
           </View>
-        </View>
 
-        <View style={[styles.action]}>
-          <FontAwesome name="male" color={COLORS.primary} size={25} />
-          <TextInput
-            placeholder="Nome Completo"
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={(value) => textInputNameChange(value)}
-          />
-          {data.check_textInputNameChange ? (
-            <Animatable.View animation="bounceIn">
-              <Feather name="check-circle" color="green" size={25} />
-            </Animatable.View>
-          ) : null}
-        </View>
-        <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
-          <FontAwesome name="user" color={COLORS.primary} size={25} />
-          <TextInput
-            placeholder="E-mail"
-            autoCompleteType="email"
-            keyboardType="email-address"
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={(value) => textInputEmailChange(value)}
-          />
-          {data.check_textInputEmailChange ? (
-            <Animatable.View animation="bounceIn">
-              <Feather name="check-circle" color="green" size={25} />
-            </Animatable.View>
-          ) : null}
-        </View>
-        <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
-          <FontAwesome name="lock" color={COLORS.primary} size={25} />
-          <TextInput
-            placeholder="Senha"
-            style={styles.textInput}
-            secureTextEntry={data.secureTextEntry ? true : false}
-            onChangeText={(value) => handlePasswordChange(value)}
-          />
-          <TouchableOpacity onPress={updateSecureTextEntry}>
-            {data.secureTextEntry ? (
-              <Feather name="eye-off" color={COLORS.gray} size={25} />
-            ) : (
-              <Feather name="eye" color={COLORS.gray} size={25} />
-            )}
-          </TouchableOpacity>
-        </View>
+          <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
+            <FontAwesome name="lock" color={COLORS.primary} size={25} />
+            <TextInput
+              placeholder="Confirmar Senha"
+              style={styles.textInput}
+              secureTextEntry={data.confirm_secureTextEntry ? true : false}
+              onChangeText={(value) => handleConfirmPasswordChange(value)}
+            />
+            <TouchableOpacity onPress={updateConfirmSecureTextEntry}>
+              {data.confirm_secureTextEntry ? (
+                <Feather name="eye-off" color={COLORS.gray} size={25} />
+              ) : (
+                <Feather name="eye" color={COLORS.gray} size={25} />
+              )}
+            </TouchableOpacity>
+          </View>
 
-        <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
-          <FontAwesome name="lock" color={COLORS.primary} size={25} />
-          <TextInput
-            placeholder="Confirmar Senha"
-            style={styles.textInput}
-            secureTextEntry={data.confirm_secureTextEntry ? true : false}
-            onChangeText={(value) => handleConfirmPasswordChange(value)}
-          />
-          <TouchableOpacity onPress={updateConfirmSecureTextEntry}>
-            {data.confirm_secureTextEntry ? (
-              <Feather name="eye-off" color={COLORS.gray} size={25} />
-            ) : (
-              <Feather name="eye" color={COLORS.gray} size={25} />
-            )}
-          </TouchableOpacity>
-        </View>
+          <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
+            <CreditCardInput
+              requiresName={true}
+              requiresCVC={true}
+              validColor={COLORS.darkGreen}
+              invalidColor={COLORS.red}
+              placeholderColor="darkgray"
+              allowScroll
+              placeholders={{
+                number: "5386 9596 2508 0429",
+                expiry: "08/21",
+                cvc: "416",
+                name: "JOSÉ DA SILVA",
+              }}
+              labels={{
+                number: "NÚMERO DO CARTÃO",
+                expiry: "VALIDO ATÉ",
+                cvc: "CVV/CVC",
+                name: "NOME COMPLETO",
+              }}
+              labelStyle={{ color: "black", fontSize: 12 }}
+              inputStyle={{ color: "black", fontSize: 16 }}
+              onChange={_onChange}
+              onFocus={_onFocus}
+            />
+          </View>
 
-        <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
-          <CreditCardInput
-            requiresName={true}
-            requiresCVC={true}
-            validColor={COLORS.darkGreen}
-            invalidColor={COLORS.red}
-            placeholderColor="darkgray"
-            allowScroll
-            placeholders={{
-              number: "5386 9596 2508 0429",
-              expiry: "08/21",
-              cvc: "416",
-              name: "JOSÉ DA SILVA",
-            }}
-            labels={{
-              number: "NÚMERO DO CARTÃO",
-              expiry: "VALIDO ATÉ",
-              cvc: "CVV/CVC",
-              name: "NOME COMPLETO",
-            }}
-            labelStyle={{ color: "black", fontSize: 12 }}
-            inputStyle={{ color: "black", fontSize: 16 }}
-            onChange={_onChange}
-            onFocus={_onFocus}
-          />
-        </View>
-
-        <View style={styles.footerSection}>
-          <TouchableOpacity
-            style={styles.signInButton}
-            onPress={() => signUp()}
-          >
-            <Text style={[styles.signInButtonText, { color: COLORS.white }]}>
-              Registrar-se
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+          <View style={styles.footerSection}>
+            <TouchableOpacity
+              style={styles.signInButton}
+              onPress={() => signUp()}
+            >
+              <Text style={[styles.signInButtonText, { color: COLORS.white }]}>
+                Registrar-se
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </Animatable.View>
     </View>
   );
 }
@@ -242,7 +247,9 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    marginBottom: 0,
+  },
+  scroolView: {
+    flex: 1,
   },
   text_footer: {
     color: COLORS.primary,
@@ -274,7 +281,6 @@ const styles = StyleSheet.create({
   footerSection: {
     alignItems: "center",
     marginTop: 50,
-    marginBottom: 50,
   },
   signInButton: {
     width: "100%",
