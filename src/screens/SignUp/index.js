@@ -31,6 +31,14 @@ export default function SignIn({ navigation }) {
     password: "",
     confirm_password: "",
     cpf: "",
+    creditCard: {
+      valid: true,
+      cvc: "",
+      expiry: "",
+      name: "",
+      number: "",
+      type: "",
+    },
     check_textInputNameChange: false,
     check_textInputEmailChange: false,
     check_textInputCpfChange: false,
@@ -41,7 +49,6 @@ export default function SignIn({ navigation }) {
     isValidPassword: true,
     isValidConfirmPassword: true,
     isValidCpf: true,
-    passwordMatch: true,
   });
 
   const textInputEmailChange = (email) => {
@@ -124,7 +131,7 @@ export default function SignIn({ navigation }) {
   };
 
   const textInputConfirmPasswordChange = (value) => {
-    if (value.trim().length >= 8) {
+    if (value === data.password) {
       setData({
         ...data,
         confirm_password: value,
@@ -153,9 +160,25 @@ export default function SignIn({ navigation }) {
     });
   };
 
-  const _onChange = (formData) => console.log(formData);
+  const signUpHandle = () => {
+    console.log(data);
 
-  const _onFocus = (field) => console.log("focusing", field);
+    //signUp()
+  };
+
+  const _onChange = (formData) => {
+    setData({
+      ...data,
+      creditCard: {
+        valid: formData.valid,
+        cvc: formData.values.cvc,
+        expiry: formData.values.expiry,
+        name: formData.values.name,
+        number: formData.values.number,
+        type: formData.values.type,
+      },
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -269,7 +292,7 @@ export default function SignIn({ navigation }) {
           {data.isValidConfirmPassword ? null : (
             <Animatable.View animation="fadeInLeft" duration={500}>
               <Text style={styles.errorMsg}>
-                Senha deve ter no mínimo 8 caracteres.
+                As senhas não são correspondentes.
               </Text>
             </Animatable.View>
           )}
@@ -320,14 +343,13 @@ export default function SignIn({ navigation }) {
               labelStyle={{ color: "black", fontSize: 12 }}
               inputStyle={{ color: "black", fontSize: 16 }}
               onChange={_onChange}
-              onFocus={_onFocus}
             />
           </View>
 
           <View style={styles.footerSection}>
             <TouchableOpacity
               style={styles.signInButton}
-              onPress={() => signUp()}
+              onPress={() => signUpHandle()}
             >
               <Text style={[styles.signInButtonText, { color: COLORS.white }]}>
                 Registrar-se
@@ -339,8 +361,6 @@ export default function SignIn({ navigation }) {
     </View>
   );
 }
-
-const { height } = Dimensions.get("screen");
 
 const styles = StyleSheet.create({
   container: {
