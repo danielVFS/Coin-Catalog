@@ -14,6 +14,7 @@ import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { CreditCardInput } from "react-native-credit-card-input";
+import { validate } from "gerador-validador-cpf";
 
 import { COLORS, FONTS, SIZES } from "../../themes/theme";
 
@@ -40,6 +41,7 @@ export default function SignIn({ navigation }) {
     isValidPassword: true,
     isValidConfirmPassword: true,
     isValidCpf: true,
+    passwordMatch: true,
   });
 
   const textInputEmailChange = (email) => {
@@ -88,7 +90,7 @@ export default function SignIn({ navigation }) {
       .replace(/(\d{3})(\d{1,2})/, "$1-$2")
       .replace(/(-\d{2})\d+?$/, "$1"); // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
 
-    if (cpfWithMask.length >= 14) {
+    if (validate(cpfWithMask)) {
       setData({
         ...data,
         cpf: cpfWithMask,
