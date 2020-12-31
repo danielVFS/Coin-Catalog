@@ -32,7 +32,7 @@ export default function SignIn({ navigation }) {
     isValidPassword: true,
   });
 
-  const textInputChange = (email) => {
+  const textInputEmailChange = (email) => {
     const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (regex.test(String(email).toLocaleLowerCase())) {
@@ -97,20 +97,6 @@ export default function SignIn({ navigation }) {
     signIn(foundUser);
   };
 
-  const handleValidUser = (value) => {
-    if (value.trim().length >= 4) {
-      setData({
-        ...data,
-        isValidEmail: true,
-      });
-    } else {
-      setData({
-        ...data,
-        isValidEmail: false,
-      });
-    }
-  };
-
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.header}>
@@ -134,8 +120,7 @@ export default function SignIn({ navigation }) {
             keyboardType="email-address"
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={(value) => textInputChange(value)}
-            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+            onChangeText={(value) => textInputEmailChange(value)}
           />
           {data.check_textInputChange ? (
             <Animatable.View animation="bounceIn">
@@ -170,7 +155,7 @@ export default function SignIn({ navigation }) {
         {data.isValidPassword ? null : (
           <Animatable.View animation="fadeInLeft" duration={500}>
             <Text style={styles.errorMsg}>
-              Senha deve ter no mínimo 8 caracteres caracteres.
+              Senha deve ter no mínimo 8 caracteres.
             </Text>
           </Animatable.View>
         )}

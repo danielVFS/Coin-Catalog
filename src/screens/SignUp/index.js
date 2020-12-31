@@ -29,56 +29,112 @@ export default function SignIn({ navigation }) {
     email: "",
     password: "",
     confirm_password: "",
+    cpf: "",
     check_textInputNameChange: false,
     check_textInputEmailChange: false,
+    check_textInputCpfChange: false,
     secureTextEntry: true,
     confirm_secureTextEntry: true,
+    isValidName: true,
+    isValidEmail: true,
+    isValidPassword: true,
+    isValidConfirmPassword: true,
+    isValidCpf: true,
   });
 
-  const textInputEmailChange = (value) => {
-    if (value.lenght !== 0) {
+  const textInputEmailChange = (email) => {
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (regex.test(String(email).toLocaleLowerCase())) {
       setData({
         ...data,
-        email: value,
+        email: email,
+        isValidEmail: true,
         check_textInputEmailChange: true,
       });
     } else {
       setData({
         ...data,
-        email: value,
+        email: email,
+        isValidEmail: false,
         check_textInputEmailChange: false,
       });
     }
   };
 
   const textInputNameChange = (value) => {
-    if (value.lenght !== 0) {
+    if (value.trim().length >= 4) {
       setData({
         ...data,
         name: value,
+        isValidName: true,
         check_textInputNameChange: true,
       });
     } else {
       setData({
         ...data,
-        email: value,
+        name: value,
+        isValidName: false,
         check_textInputNameChange: false,
       });
     }
   };
 
-  const handlePasswordChange = (value) => {
-    setData({
-      ...data,
-      password: value,
-    });
+  const textInputCpfChange = (value) => {
+    const cpfWithMask = value
+      .replace(/\D/g, "") // substitui qualquer caracter que nao seja numero por nada
+      .replace(/(\d{3})(\d)/, "$1.$2") // captura 2 grupos de numero o primeiro de 3 e o segundo de 1, apos capturar o primeiro grupo ele adiciona um ponto antes do segundo grupo de numero
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+      .replace(/(-\d{2})\d+?$/, "$1"); // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
+
+    if (cpfWithMask.length >= 14) {
+      setData({
+        ...data,
+        cpf: cpfWithMask,
+        check_textInputCpfChange: true,
+        isValidCpf: true,
+      });
+    } else {
+      setData({
+        ...data,
+        cpf: cpfWithMask,
+        check_textInputCpfChange: false,
+        isValidCpf: false,
+      });
+    }
   };
 
-  const handleConfirmPasswordChange = (value) => {
-    setData({
-      ...data,
-      confirm_password: value,
-    });
+  const textInputPasswordChange = (value) => {
+    if (value.trim().length >= 8) {
+      setData({
+        ...data,
+        password: value,
+        isValidPassword: true,
+      });
+    } else {
+      setData({
+        ...data,
+        password: value,
+        isValidPassword: false,
+      });
+    }
+  };
+
+  const textInputConfirmPasswordChange = (value) => {
+    if (value.trim().length >= 8) {
+      setData({
+        ...data,
+        confirm_password: value,
+        isValidConfirmPassword: true,
+      });
+    } else {
+      setData({
+        ...data,
+        confirm_password: value,
+        isValidConfirmPassword: false,
+      });
+    }
   };
 
   const updateSecureTextEntry = () => {
@@ -136,6 +192,14 @@ export default function SignIn({ navigation }) {
               </Animatable.View>
             ) : null}
           </View>
+          {data.isValidName ? null : (
+            <Animatable.View animation="fadeInLeft" duration={500}>
+              <Text style={styles.errorMsg}>
+                Nome deve ter no mínimo 4 caracteres.
+              </Text>
+            </Animatable.View>
+          )}
+
           <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
             <FontAwesome name="user" color={COLORS.primary} size={25} />
             <TextInput
@@ -152,13 +216,21 @@ export default function SignIn({ navigation }) {
               </Animatable.View>
             ) : null}
           </View>
+          {data.isValidEmail ? null : (
+            <Animatable.View animation="fadeInLeft" duration={500}>
+              <Text style={styles.errorMsg}>
+                Email deve ser um e-mail válido.
+              </Text>
+            </Animatable.View>
+          )}
+
           <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
             <FontAwesome name="lock" color={COLORS.primary} size={25} />
             <TextInput
               placeholder="Senha"
               style={styles.textInput}
               secureTextEntry={data.secureTextEntry ? true : false}
-              onChangeText={(value) => handlePasswordChange(value)}
+              onChangeText={(value) => textInputPasswordChange(value)}
             />
             <TouchableOpacity onPress={updateSecureTextEntry}>
               {data.secureTextEntry ? (
@@ -168,6 +240,13 @@ export default function SignIn({ navigation }) {
               )}
             </TouchableOpacity>
           </View>
+          {data.isValidPassword ? null : (
+            <Animatable.View animation="fadeInLeft" duration={500}>
+              <Text style={styles.errorMsg}>
+                Senha deve ter no mínimo 8 caracteres.
+              </Text>
+            </Animatable.View>
+          )}
 
           <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
             <FontAwesome name="lock" color={COLORS.primary} size={25} />
@@ -175,7 +254,7 @@ export default function SignIn({ navigation }) {
               placeholder="Confirmar Senha"
               style={styles.textInput}
               secureTextEntry={data.confirm_secureTextEntry ? true : false}
-              onChangeText={(value) => handleConfirmPasswordChange(value)}
+              onChangeText={(value) => textInputConfirmPasswordChange(value)}
             />
             <TouchableOpacity onPress={updateConfirmSecureTextEntry}>
               {data.confirm_secureTextEntry ? (
@@ -185,6 +264,36 @@ export default function SignIn({ navigation }) {
               )}
             </TouchableOpacity>
           </View>
+          {data.isValidConfirmPassword ? null : (
+            <Animatable.View animation="fadeInLeft" duration={500}>
+              <Text style={styles.errorMsg}>
+                Senha deve ter no mínimo 8 caracteres.
+              </Text>
+            </Animatable.View>
+          )}
+
+          <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
+            <FontAwesome name="user" color={COLORS.primary} size={25} />
+            <TextInput
+              value={data.cpf}
+              placeholder="CPF"
+              keyboardType="number-pad"
+              style={styles.textInput}
+              onChangeText={(value) => textInputCpfChange(value)}
+            />
+            {data.check_textInputCpfChange ? (
+              <Animatable.View animation="bounceIn">
+                <Feather name="check-circle" color="green" size={25} />
+              </Animatable.View>
+            ) : null}
+          </View>
+          {data.isValidCpf ? null : (
+            <Animatable.View animation="fadeInLeft" duration={500}>
+              <Text style={styles.errorMsg}>
+                Você deve digitar um CPF válido.
+              </Text>
+            </Animatable.View>
+          )}
 
           <View style={[styles.action, { marginTop: SIZES.marginTop }]}>
             <CreditCardInput
@@ -310,5 +419,9 @@ const styles = StyleSheet.create({
   signUpButtonText: {
     fontWeight: "bold",
     color: "#FC955F",
+  },
+  errorMsg: {
+    color: COLORS.red,
+    fontSize: SIZES.body4,
   },
 });
