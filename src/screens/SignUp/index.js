@@ -349,7 +349,9 @@ export default function SignIn({ navigation }) {
           <View style={styles.footerSection}>
             <TouchableOpacity
               style={styles.signInButton}
-              onPress={() => signUpHandle()}
+              onPress={() => {
+                signUpHandle();
+              }}
             >
               <Text style={[styles.signInButtonText, { color: COLORS.white }]}>
                 Registrar-se
