@@ -15,7 +15,9 @@ export default function Home({ navigation }) {
       <SafeAreaView style={styles.header}>
         <Text style={styles.title}>Selecione as opções de inserção</Text>
       </SafeAreaView>
-      <View style={styles.footer}></View>
+      <View style={styles.footer}>
+        <View><Text>Content</Text></View>
+      </View>
     </View>
   );
 }
