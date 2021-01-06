@@ -25,6 +25,7 @@ export default function AppRoutes() {
 
   return (
     <Tabs.Navigator
+      initialRouteName="Home"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           const { name } = icons[route.name];
@@ -33,13 +34,18 @@ export default function AppRoutes() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: COLORS.green,
+        activeTintColor: COLORS.white,
         showLabel: false,
+        activeBackgroundColor: COLORS.green,
+        tabStyle: {
+          borderRadius: 50,
+          marginTop: 5,
+          marginBottom: 5,
+        },
         style: {
           borderTopWidth: 1,
           borderTopColor: COLORS.gray,
         },
-        //inactiveTintColor: "#B5BEBF",
       }}
     >
       <Tabs.Screen name="Search" component={SearchScreen} />
