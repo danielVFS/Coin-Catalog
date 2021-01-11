@@ -6,9 +6,13 @@ import Header from '../../components/Header';
 import { COLORS, FONTS, SIZES } from "../../themes/theme";
 
 export default function Period({ navigation }) {
+  const returnScreen = () => {
+    navigation.goBack();
+  }
+  
   return (
     <View style={styles.container}>
-      <Header title="Selecione as opções de inserção" subtitle="Período"/>
+      <Header title="Selecione as opções de inserção" subtitle="Período" returnScreen={returnScreen}/>
       <View style={styles.footer}>
         <View>
           <TouchableOpacity onPress={() => navigation.goBack()}>

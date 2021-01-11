@@ -6,17 +6,27 @@ import {
   StyleSheet,
   SafeAreaView,
 } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+
 
 import { COLORS, FONTS, SIZES } from "../../themes/theme";
 
-export default function Header({ title, subtitle }) {
+export default function Header({ title, subtitle, returnScreen, initialRoute = false }) {
   return (
     <SafeAreaView style={styles.header}>
       <Text style={styles.title}>{title}</Text>
       <View style={styles.subtitle}>
         <Text style={styles.subtitleText}>{subtitle}</Text>
       </View>
+      {
+        initialRoute ? 
+          false
+        : 
+        <TouchableOpacity style={styles.returnScreen} onPress={() => returnScreen()}>
+          <FontAwesome name="chevron-left" color={COLORS.tertiary} size={25} /> 
+          <Text style={styles.returnScreenText}>Voltar</Text>
+        </TouchableOpacity>
+      }
     </SafeAreaView>
   );
 }
@@ -51,4 +61,16 @@ const styles = StyleSheet.create({
     fontSize: SIZES.h4,
     fontWeight: "bold",
   },
+  returnScreen: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  returnScreenText: {
+    color: COLORS.white,
+    fontSize: SIZES.h4,
+    fontWeight: "bold",
+    paddingLeft: 5,
+  }
 });
