@@ -8,9 +8,13 @@ import { COLORS, FONTS, SIZES } from "../../themes/theme";
 export default function Type({ navigation }) {
   return (
     <View style={styles.container}>
-      <Header />
+      <Header title="Selecione as opções de inserção" subtitle="Tipo"/>
       <View style={styles.footer}>
-        <View><Text>Content</Text></View>
+        <View>
+          <TouchableOpacity onPress={() => navigation.navigate("Period")}>
+            <Text>Trocar de tela - Type</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

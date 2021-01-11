@@ -61,7 +61,7 @@ export default function AppRoutes() {
       tabBarOptions={{
         activeTintColor: COLORS.white,
         showLabel: false,
-        activeBackgroundColor: COLORS.green,
+        activeBackgroundColor: COLORS.tertiary,
         keyboardHidesTabBar: true,
         tabStyle: {
           borderRadius: 50,
