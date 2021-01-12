@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 
 import Header from '../../components/Header';
+import Card from '../../components/Card';
 
 import { COLORS, FONTS, SIZES } from "../../themes/theme";
 
@@ -30,14 +31,16 @@ export default function Type({ navigation }) {
         initialRoute
       />
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.card} onPress={() => coinOption()}>
-          <Image source={coinImage} style={styles.cardImage}/>
-          <Text style={styles.cardText}>Moeda</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.card} onPress={() => billOption()}>
-          <Image source={billImage} style={styles.cardImage}/>
-          <Text style={styles.cardText}>Cédula</Text>
-        </TouchableOpacity>
+        <Card 
+          image={coinImage}
+          text="Moeda"
+          returnOption={coinOption}
+        />
+        <Card 
+          image={billImage}
+          text="Cédula"
+          returnOption={billOption}
+        />
       </View>
     </View>
   );
