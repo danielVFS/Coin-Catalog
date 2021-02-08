@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, FlatList, Image } from "react-native";
 
 import Header from '../../components/Header';
 import Card from '../../components/Card';
@@ -10,16 +10,21 @@ import coinImage from '../../assets/images/coin.png';
 import billImage from '../../assets/images/real.png';
 
 export default function Type({ navigation }) {
+  const [types, setTypes] = React.useState([
+    {
+      id: 1,
+      name: 'Moeda',
+      image: coinImage
+    },
+    {
+      id: 2,
+      name: 'Cédula',
+      image: billImage
+    }
+  ])
+  
   const returnScreen = () => {
     navigation.goBack();
-  }
-
-  const coinOption = () => {
-    navigation.navigate("Period");
-  }
-
-  const billOption = () => {
-    navigation.navigate("Period");
   }
 
   return (
@@ -30,18 +35,21 @@ export default function Type({ navigation }) {
         returnScreen={returnScreen}
         initialRoute
       />
-      <View style={styles.footer}>
-        <Card 
-          image={coinImage}
-          text="Moeda"
-          returnOption={coinOption}
-        />
-        <Card 
-          image={billImage}
-          text="Cédula"
-          returnOption={billOption}
-        />
-      </View>
+      <FlatList style={styles.typesList}
+        showsVerticalScrollIndicator={false}
+        numColumns={1}
+        data={types}
+        keyExtractor={(type) => String(type.id)}
+        renderItem={({ item: type }) => (
+          <Card 
+            image={type.image}
+            text={type.name}
+            selectedOption={
+              () => navigation.navigate('Period', { type })
+            }
+          />
+        )}
+      />
     </View>
   );
 }
@@ -51,32 +59,35 @@ const styles =  StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.primary,
   },
-  footer: {
-    flex: 2,
-    alignItems: 'center',
-    backgroundColor: COLORS.white,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-  },
-  card: {
-    width: '90%',
-    height: 100,
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderRadius: 18,
+  typesList: {
+    marginTop: 60,
+    paddingTop: 0,
+    paddingBottom: 0,
     paddingLeft: 20,
-    marginBottom: 20,
-    backgroundColor: COLORS.secondary,
+    paddingRight: 20,
   },
-  cardImage: {
-    width: 80,
-    height: 80,
+  type: {
+    backgroundColor: '#FFF',
+    borderRadius: 4,
+    padding: 20,
+    flex: 1,
+
+    alignItems: 'center',
+    marginBottom: 0,
+    marginTop: 0,
+    marginLeft: 10,
+    marginRight: 15,
   },
-  cardText: {
-    fontSize: SIZES.h2,
-    fontWeight: "700",
-    paddingLeft: 30,
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  name: {
+    marginTop: 15,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
   }
 });

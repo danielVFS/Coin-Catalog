@@ -8,9 +8,9 @@ import {
 
 import { COLORS, FONTS, SIZES } from "../../themes/theme";
 
-export default function Card({ image, text, returnOption }) {
+export default function Card({ image, text, selectedOption }) {
   return (
-    <TouchableOpacity style={[styles.card, styles.shadow]} onPress={() => returnOption()}>
+    <TouchableOpacity style={[styles.card, styles.shadow]} onPress={() => selectedOption()}>
       <Image source={image} style={styles.cardImage}/>
       <Text style={styles.cardText}>{text}</Text>
     </TouchableOpacity>
@@ -19,7 +19,7 @@ export default function Card({ image, text, returnOption }) {
 
 const styles = StyleSheet.create({
   card: {
-    width: '90%',
+    width: '85%',
     height: 100,
     alignItems: 'center',
     flexDirection: 'row',
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     height: 80,
   },
   cardText: {
-    fontSize: SIZES.h2,
+    fontSize: SIZES.body2,
     fontWeight: "700",
-    paddingLeft: 30,
+    paddingLeft: 20,
   },
   shadow: {
     shadowColor: COLORS.black,
