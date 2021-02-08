@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView, StyleSheet, Text } from "react-native";
+import { View, ScrollView, StyleSheet, FlatList } from "react-native";
 
 import Header from '../../components/Header';
 import Card from '../../components/Card';
@@ -13,58 +13,52 @@ import { COLORS, FONTS, SIZES } from "../../themes/theme";
 
 export default function Period({ navigation, route }) {
   const { type } = route.params;
+
+  const [periods, setPeriods] = React.useState([
+    {
+      id: 1,
+      name: 'Brasil Côlonia',
+      image: colonialImage
+    },
+    {
+      id: 2,
+      name: 'Brasil Império',
+      image: imperialImage
+    },
+    {
+      id: 3,
+      name: 'Brasil República',
+      image: republicImage
+    },
+    {
+      id: 4,
+      name: 'Estrangeiras',
+      image: foreignImage
+    },
+  ])
   
-  const returnScreen = () => {
-    navigation.goBack();
-  }
-  
-  const republicOption = () => {
-    //navigation.navigate();
-  }
-
-  const colonialOption = () => {
-    //navigation.navigate();
-  }
-
-  const foreignOption = () => {
-    //navigation.navigate();
-  }
-
-  const imperialOption = () => {
-    //navigation.navigate();
-  }
-
   return (
     <View style={styles.container}>
-      <Header title="Selecione as opções de inserção" subtitle="Período" returnScreen={returnScreen}/>
-      <View style={[styles.footer]}>
-        <ScrollView 
-          showsVerticalScrollIndicator={false} 
-          style={styles.scroll}
-        >
+      <Header
+        title="Selecione as opções de inserção"
+        subtitle="Período"
+        returnScreen={() => navigation.goBack()}
+      />
+      <FlatList style={styles.periodsList}
+        showsVerticalScrollIndicator={false}
+        numColumns={1}
+        data={periods}
+        keyExtractor={(period) => String(period.id)}
+        renderItem={({ item: period }) => (
           <Card 
-            image={colonialImage}
-            text="Brasil Colônia"
-            returnOption={colonialOption}
+            image={period.image}
+            text={period.name}
+            selectedOption={
+              () => navigation.navigate('Period', { period })
+            }
           />
-          <Card 
-            image={imperialImage}
-            text="Brasil Império"
-            returnOption={imperialOption}
-          />
-          <Text style={{ color: '#000' }}>{ type.name }</Text>
-          <Card 
-            image={republicImage}
-            text="Brasil República"
-            returnOption={republicOption}
-          />
-          <Card 
-            image={foreignImage}
-            text="Estrangeiras"
-            returnOption={foreignOption}
-          />
-        </ScrollView>
-      </View>
+        )}
+      />
     </View>
   );
 }
@@ -72,19 +66,15 @@ export default function Period({ navigation, route }) {
 const styles =  StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: COLORS.primary,
-  },
-  footer: {
-    flex: 2,
+    justifyContent: "center",
     alignItems: 'center',
-    backgroundColor: COLORS.white,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
   },
-  scroll: {
-    width: '100%',
-    marginHorizontal: 0,
+  periodsList: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
 });
