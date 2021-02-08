@@ -63,28 +63,4 @@ const styles =  StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  type: {
-    backgroundColor: '#FFF',
-    borderRadius: 4,
-    padding: 20,
-    flex: 1,
-
-    alignItems: 'center',
-    marginBottom: 0,
-    marginTop: 0,
-    marginLeft: 10,
-    marginRight: 15,
-  },
-  avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-  },
-  name: {
-    marginTop: 15,
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#333',
-    textAlign: 'center',
-  }
 });
