@@ -19,7 +19,7 @@ export default function Card({ image, text, selectedOption }) {
 
 const styles = StyleSheet.create({
   card: {
-    width: '85%',
+    width: 280,
     height: 100,
     alignItems: 'center',
     flexDirection: 'row',
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: SIZES.body2,
     fontWeight: "700",
-    paddingLeft: 20,
+    paddingLeft: 30,
   },
   shadow: {
     shadowColor: COLORS.black,

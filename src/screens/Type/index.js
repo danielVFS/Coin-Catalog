@@ -22,17 +22,13 @@ export default function Type({ navigation }) {
       image: billImage
     }
   ])
-  
-  const returnScreen = () => {
-    navigation.goBack();
-  }
 
   return (
     <View style={styles.container}>
       <Header 
         title="Selecione as opções de inserção" 
         subtitle="Tipo" 
-        returnScreen={returnScreen}
+        returnScreen={() => navigation.goBack()}
         initialRoute
       />
       <FlatList style={styles.typesList}
@@ -58,9 +54,10 @@ const styles =  StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.primary,
+    justifyContent: "center",
+    alignItems: "center",
   },
   typesList: {
-    marginTop: 60,
     paddingTop: 0,
     paddingBottom: 0,
     paddingLeft: 20,
